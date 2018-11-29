@@ -1,4 +1,4 @@
-CC = /usr/local/bin/g++
+CC = /usr/bin/g++
 CFLAGS = 
 LIBS = -lm
 
@@ -13,4 +13,5 @@ rv.o: rv.h rv.cpp
 
 event.o: event.h event.cpp
 	$(CC) $(CFLAGS) -c event.cpp
-
+clean: 
+	rm -rf main.o rv.o event.o sim
