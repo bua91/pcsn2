@@ -1,13 +1,22 @@
 #ifndef EV_H
 #define EV_H
 
+#define HIGH 2
+#define LOW 1
+#define QUEUE1 1
+#define QUEUE2 2
+
 struct Event {
   double time;            // Time at which Event takes place
   int type;               // Type of Event
+  int queue;              // Queue number
+  int priority;           // Priority
   Event* next;            // Points to next event in list
-  Event(double t, int i) {
+  Event(double t, int i, int q, int p) {
     time = t;
     type = i;
+    queue = q;
+    priority = p;
     next = 0;
   }
 };
