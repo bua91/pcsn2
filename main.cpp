@@ -123,6 +123,56 @@ int main()
 		      		break;
 	    	    	}
 	    	}
+		
+		if (CurrentEvent->queue == QUEUE2){
+			switch (CurrentEvent->type) {
+		    	case ARR:                                 // If arrival 
+		     		EN += N*(clock-prev);                   //  update system statistics
+		      		
+				N++;                                    //  update system size
+		      		if (CurrentEvent->priority == HIGH)
+		      			N1h++;
+				else if (CurrentEvent->priority == LOW)
+					N1l++;
+				
+				// Generate next arrival
+				if (uni_rv() <= ph){
+		      			Elist.insert(clock+exp_rv(lambda),ARR, QUEUE1, HIGH);
+				}
+				else{
+					Elist.insert(clock+exp_rv(lambda),ARR, QUEUE1, LOW);
+				}
+
+				//If this is the only customer then generate its departure event
+		      		if (N==1 && (CurrentEvent->priority == HIGH)){
+					Elist.insert(clock+exp_rv(mu1),DEP, QUEUE1, HIGH);
+		      		}
+				else if (N==1 && (CurrentEvent->priority == LOW)){
+					Elist.insert(clock+exp_rv(mu1),DEP, QUEUE1, LOW);
+				}
+		      		break;
+		    	case DEP:                                 // If departure
+		      		EN += N*(clock-prev);                   //  update system statistics
+
+		      		N--;                                    //  decrement system size
+				if (CurrentEvent->priority == HIGH)
+					N1h--;
+				else if (CurrentEvent->priority == LOW)
+					N1l--;
+		      		
+				Ndep++;                                 //  increment num. of departures
+
+		      		//If customers remain, first generate departure events for all high priority customers.
+				//If there is no high priority customers, then only generate departure event for low.
+				if (N > 0) {
+					if (N1h > 0)
+						Elist.insert(clock+exp_rv(mu1),DEP, QUEUE1, HIGH);
+					else if (N1l > 0)
+						Elist.insert(clock+exp_rv(mu1),DEP, QUEUE1, LOW);
+		      		} 
+		      		break;
+	    	    	}
+	    	}
 	    delete CurrentEvent;
 	    if (Ndep > 500000) done=1;        // End condition
 	  }
