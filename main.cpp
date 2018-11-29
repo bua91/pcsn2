@@ -9,6 +9,9 @@
 int main()
 {
   using namespace std;
+  double lambda = 1;
+  for (lambda = 1; lambda <= 10; lambda++){
+  
   EventList Elist;                // Create event list
   enum {ARR,DEP};                 // Define the event types
 
