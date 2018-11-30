@@ -86,103 +86,94 @@ int main()
 					N1l++;
 				
 				// Generate next arrival
-				if (uni_rv() <= ph){
+				if (uni_rv() <= ph)
 		      			Elist.insert(clock+exp_rv(lambda),ARR, QUEUE1, HIGH);
-				}
-				else{
+				else
 					Elist.insert(clock+exp_rv(lambda),ARR, QUEUE1, LOW);
-				}
 
 				//If this is the only customer then generate its departure event
-		      		if (N==1 && (CurrentEvent->priority == HIGH)){
+		      		if (N==1 && (CurrentEvent->priority == HIGH))
 					Elist.insert(clock+exp_rv(mu1),DEP, QUEUE1, HIGH);
-		      		}
 				else if (N==1 && (CurrentEvent->priority == LOW)){
 					Elist.insert(clock+exp_rv(mu1),DEP, QUEUE1, LOW);
-				}
 		      		break;
-		    	case DEP:                                 // If departure
+		    	
+			case DEP:                                 // If departure
 		      		EN += N*(clock-prev);                   //  update system statistics
-
-		      		N--;                                    //  decrement system size
-				if (CurrentEvent->priority == HIGH)
+				if (CurrentEvent->priority == HIGH){
 					N1h--;
-				else if (CurrentEvent->priority == LOW)
+					N2h++;
+					//generate its departure event from queue 2
+					Elist.insert(clock+exp_rv(mu2h),DEP, QUEUE2, HIGH);
+
+				}
+				else if (CurrentEvent->priority == LOW){
 					N1l--;
-		      		
-				Ndep++;                                 //  increment num. of departures
+					N2l++;
+					//generate its departure evenet from queue 2
+				 	if (uni_rv() < r2d)
+						Elist.insert(clock+exp_rv(mu2l),DEP, QUEUE2, LOW);
+					else if ((uni_rv() > r2d) && (uni_rv() <= (r2d+r21)))
+						N1l++;
+					else
+						N2l += 0.0; //N2l will remain same as the event goes out from queue 2 and returns back to queue 2 again
+		      		}
 
 		      		//If customers remain, first generate departure events for all high priority customers.
 				//If there is no high priority customers, then only generate departure event for low.
-				if (N > 0) {
-					if (N1h > 0)
-						Elist.insert(clock+exp_rv(mu1),DEP, QUEUE1, HIGH);
-					else if (N1l > 0)
-						Elist.insert(clock+exp_rv(mu1),DEP, QUEUE1, LOW);
-		      		} 
+				if (N1h > 0)
+					Elist.insert(clock+exp_rv(mu1),DEP, QUEUE1, HIGH);
+				else if (N1l > 0)
+					Elist.insert(clock+exp_rv(mu1),DEP, QUEUE1, LOW);
 		      		break;
 	    	    	}
 	    	}
 		
 		if (CurrentEvent->queue == QUEUE2){
 			switch (CurrentEvent->type) {
-		    	case ARR:                                 // If arrival 
-		     		EN += N*(clock-prev);                   //  update system statistics
-		      		
-				N++;                                    //  update system size
-		      		if (CurrentEvent->priority == HIGH)
-		      			N1h++;
-				else if (CurrentEvent->priority == LOW)
-					N1l++;
-				
-				// Generate next arrival
-				if (uni_rv() <= ph){
-		      			Elist.insert(clock+exp_rv(lambda),ARR, QUEUE1, HIGH);
-				}
-				else{
-					Elist.insert(clock+exp_rv(lambda),ARR, QUEUE1, LOW);
-				}
-
-				//If this is the only customer then generate its departure event
-		      		if (N==1 && (CurrentEvent->priority == HIGH)){
-					Elist.insert(clock+exp_rv(mu1),DEP, QUEUE1, HIGH);
-		      		}
-				else if (N==1 && (CurrentEvent->priority == LOW)){
-					Elist.insert(clock+exp_rv(mu1),DEP, QUEUE1, LOW);
-				}
-		      		break;
-		    	case DEP:                                 // If departure
+			//in queue 2 only departurre events will be there
+		    	case DEP:
 		      		EN += N*(clock-prev);                   //  update system statistics
 
 		      		N--;                                    //  decrement system size
 				if (CurrentEvent->priority == HIGH)
-					N1h--;
+					N2h--;
 				else if (CurrentEvent->priority == LOW)
-					N1l--;
+					N2l--;
 		      		
 				Ndep++;                                 //  increment num. of departures
 
 		      		//If customers remain, first generate departure events for all high priority customers.
 				//If there is no high priority customers, then only generate departure event for low.
 				if (N > 0) {
-					if (N1h > 0)
-						Elist.insert(clock+exp_rv(mu1),DEP, QUEUE1, HIGH);
-					else if (N1l > 0)
-						Elist.insert(clock+exp_rv(mu1),DEP, QUEUE1, LOW);
+					if (N2h > 0)
+						Elist.insert(clock+exp_rv(mu2h),DEP, QUEUE2, HIGH);
+					else if (N2l > 0){
+						if (uni_rv() < r2d)
+					        	Elist.insert(clock+exp_rv(mu2l),DEP, QUEUE2, LOW);
+						else if ((uni_rv() > r2d) && (uni_rv() <= (r2d+r21)))
+						        N1l++;
+						else
+						        N2l += 0.0; //N2l will remain the same as the event goes out from queue 2 and returns back to queue 2 again
+					}
 		      		} 
 		      		break;
+
+			default : cout<<"\n"<<"Case error"<<endl;
+				  break;
 	    	    	}
 	    	}
 	    delete CurrentEvent;
 	    if (Ndep > 500000) done=1;        // End condition
 	  }
 	  // output simulation results for N, E[N] 
-	  cout << "Current number of customers in system: " << N << endl;
-	  cout << "Expected number of customers (simulation): " << EN/clock << endl;
+	  //cout << "Current number of customers in system: " << N << endl;
+	  //cout << "Expected number of customers (simulation): " << EN/clock << endl;
 
 	  // output derived value for E[N]
-  	double rho = lambda/mu; 
-  	cout << "Expected number of customers (analysis): " << rho/(1-rho) << endl;
+  	//double rho = lambda/mu; 
+  	//cout << "Expected number of customers (analysis): " << rho/(1-rho) << endl;
+	cout <<"done"<<endl;
+     }
   }
 }
-

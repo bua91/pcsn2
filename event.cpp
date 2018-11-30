@@ -5,10 +5,10 @@ using namespace std;
 // Insert an Event into an EventList sorted by time index
 // time - The time at which the event takes place
 // type - The type of event
-void EventList::insert(double time, int type)
+void EventList::insert(double time, int type, int queue, int priority)
 {
   event_count++;                        // Increment number of events in list.
-  Event* eptr = new Event(time, type);
+  Event* eptr = new Event(time, type, queue, priority);
   if (head == 0) {                      // If EventList is empty, 
     head = eptr;                        // put new event at head of list.
     eptr->next = 0;

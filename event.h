@@ -27,7 +27,7 @@ class EventList {
 public:
   ~EventList() { clear();}
   EventList() { event_count = 0; head = 0;}
-  void insert(double time, int type);  // Insert new event into EventList
+  void insert(double time, int type, int queue, int priority);  // Insert new event into EventList
   Event* get();                        // Returns first Event in EventList
   void clear();                        // Removes all Events from EventList
   Event* remove(int type);             // Returns first Event of given type 
