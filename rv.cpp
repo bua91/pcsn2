@@ -1,3 +1,4 @@
+// Owner: Arunabha Chakraborty
 // 
 // This file contains programs for generating random numbers with
 // uniform distributions and exponential distributions.
