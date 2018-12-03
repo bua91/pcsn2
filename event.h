@@ -1,8 +1,9 @@
 #ifndef EV_H
 #define EV_H
 
-#define HIGH 2
 #define LOW 1
+#define HIGH 2
+#define TBD 3
 #define QUEUE1 1
 #define QUEUE2 2
 
