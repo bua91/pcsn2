@@ -25,7 +25,7 @@ int main()
 	cin>> ph >> pl >> r2d >> r21 >> r22 >> mu1 >> mu2h >> mu2l;
   }*/
 
-  for (lambda = 1; lambda <= 10; lambda++){
+  for (lambda = 1; lambda <= 1; lambda++){
 	  
 	  EventList Elist;                // Create event list
 	  enum {ARR,DEP};                 // Define the event types
@@ -33,7 +33,7 @@ int main()
 	  //double lambda1h = ph*lambda;    // High priority customer arrival rate
 	  //double lambda1l = pl*lambda;    // Low priority customer arrival rate
 
-	  double clock = 0.0;             // System clock
+	  long double clock = 0.0;             // System clock
 	  
 	  long int N = 0;                 // Number of customers in system
 	  long int N1h = 0;		  // Number of high priority customers to be serviced by queue 1
@@ -42,7 +42,12 @@ int main()
 	  long int N2l = 0;		  // Number of low priority customers to be serviced by queue 2
 	  
 	  long int Ndep = 0;              // Number of departures from system
-	  double EN = 0.0;                // For calculating E[N]
+	  //double EN = 0.0;                
+	  // For calculating E[N] for each priority and queue
+	  double EN1h = 0.0;
+	  double EN1l = 0.0;
+	  double EN2h = 0.0;
+	  double EN2l = 0.0;
 
 	  int done = 0;                   // End condition satisfied?
 	  double uniform = 0.0;
@@ -76,18 +81,20 @@ int main()
 	    	clock=CurrentEvent->time;                 // Update system clock 
 
 	    	if (CurrentEvent->queue == QUEUE1){
-			//cout<< " in QUEUE 1 priority = "<<CurrentEvent->priority<<endl;
 			switch (CurrentEvent->type) {
 		    	case ARR:				// If arrival
 				//cout<< " in QUEUE 1 ARR\n";
-		     		EN += N*(clock-prev);                   //  update system statistics
+		     		//EN += N*(clock-prev);                   //  update system statistics
 		      		
 				N++;                                    //  update system size
-		      		if (CurrentEvent->priority == HIGH)
+		      		if (CurrentEvent->priority == HIGH){
+					EN1h += N1h*(clock-prev);
 		      			N1h++;
-				else if (CurrentEvent->priority == LOW)
+				}
+				else if (CurrentEvent->priority == LOW){
+					EN1l += N1l*(clock-prev);
 					N1l++;
-				
+				}				
 
 				uniform = uni_rv();
 				// Generate next arrival
@@ -98,6 +105,7 @@ int main()
 
 				//If this is the only customer then generate its departure event
 		      		//if (N==1 && (CurrentEvent->priority == HIGH))
+				cout<< "IN ARR: N1h="<<N1h<<"\tN1l="<<N1l<<endl;
 				if (N1h == 1)
 					Elist.insert(clock+exp_rv(mu1),DEP, QUEUE1, HIGH);
 				else if (N1l == 1)
@@ -106,9 +114,11 @@ int main()
 		    	
 			case DEP:                                 // If departure
 				//cout<< " in QUEUE 1 DEP\n";
-		      		EN += N*(clock-prev);                   //  update system statistics
+		      		//EN += N*(clock-prev);                   //  update system statistics
 				if (CurrentEvent->priority == HIGH){
 				//	cout << "HIGH\n";
+					EN1h += N1h*(clock-prev);
+					EN2h += N2h*(clock-prev);
 					N1h--;
 					N2h++;
 					//generate its departure event from queue 2
@@ -117,6 +127,8 @@ int main()
 				}
 				else if (CurrentEvent->priority == LOW){
 				//	cout <<"LOW\n";
+					EN1l += N1l*(clock-prev);
+					EN2l += N2l*(clock-prev);
 					N1l--;
 					N2l++;
 					uniform = uni_rv();
@@ -131,7 +143,7 @@ int main()
 
 		      		//If customers remain, first generate departure events for all high priority customers.
 				//If there is no high priority customers, then only generate departure event for low.
-				//cout<< " in QUEUE 1::-- N1h="<<N1h<<"\t N1l="<<N1l<<"\t\t N="<<N<<endl;
+				cout<< " IN DEP: N1h="<<N1h<<"\t N1l="<<N1l<<endl;
 				if (N1h > 0)
 					Elist.insert(clock+exp_rv(mu1),DEP, QUEUE1, HIGH);
 				else if (N1l > 0)
@@ -146,14 +158,17 @@ int main()
 			switch (CurrentEvent->type) {
 			//in queue 2 only departurre events will be there
 		    	case DEP:
-		      		EN += N*(clock-prev);                   //  update system statistics
+		      		//EN += N*(clock-prev);                   //  update system statistics
 
 		      		N--;                                    //  decrement system size
-				if (CurrentEvent->priority == HIGH)
+				if (CurrentEvent->priority == HIGH){
+					EN2h += N2h*(clock-prev);
 					N2h--;
-				else if (CurrentEvent->priority == LOW)
+				}
+				else if (CurrentEvent->priority == LOW){
+					EN2l += N2l*(clock-prev);
 					N2l--;
-		      		
+				}		      		
 				Ndep++;                                 //  increment num. of departures
 			//	cout<<"========="<<Ndep<<endl;
 			//	cout<<"priority=="<<CurrentEvent->priority<<endl;
@@ -181,15 +196,16 @@ int main()
 	    delete CurrentEvent;
 	    //static int test = 0;
 	    //cout<<"test ======== "<<test++<<endl;
-	    if (Ndep > 500000) done=1;        // End condition
+	    if (Ndep > 5000) done=1;        // End condition
 	  }
+	  cout <<"lambda:"<<lambda<<endl;
 	  // output simulation results for N, E[N] 
 	  //cout << "Current number of customers in system: " << N << endl;
-	  //cout << "Expected number of customers (simulation): " << EN/clock << endl;
+	  cout << "Expected number of customers (simulation QUEUE1:HIGH= " << EN1h/clock <<"\tQUEUE1:LOW"
+	       <<EN1l/clock << "\tQUEUE2:HIGH"<<EN2h/clock<<"\tQUEUE2:LOW"<<EN2l/clock<<endl;
 
 	  // output derived value for E[N]
   	//double rho = lambda/mu; 
   	//cout << "Expected number of customers (analysis): " << rho/(1-rho) << endl;
-	cout <<"lambda:"<<lambda<<endl;
     }
 }
