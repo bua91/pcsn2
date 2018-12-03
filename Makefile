@@ -15,4 +15,4 @@ event.o: event.h event.cpp
 	$(CC) $(CFLAGS) -c event.cpp
 
 clean: 
-	rm -rf main.o rv.o event.o sim
+	rm -rf main.o rv.o event.o test sim

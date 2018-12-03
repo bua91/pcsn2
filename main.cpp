@@ -4,8 +4,6 @@
 #include "rv.h"
 #include "event.h"
 
-// Simulates an M/M/1 queueing system.  The simulation terminates
-// once 100000 customers depart from the system.
 int main()
 {
   using namespace std;
@@ -78,10 +76,10 @@ int main()
 	    	clock=CurrentEvent->time;                 // Update system clock 
 
 	    	if (CurrentEvent->queue == QUEUE1){
-			cout<< " in QUEUE 1 priority = "<<CurrentEvent->priority<<endl;
+			//cout<< " in QUEUE 1 priority = "<<CurrentEvent->priority<<endl;
 			switch (CurrentEvent->type) {
 		    	case ARR:				// If arrival
-				cout<< " in QUEUE 1 ARR\n";
+				//cout<< " in QUEUE 1 ARR\n";
 		     		EN += N*(clock-prev);                   //  update system statistics
 		      		
 				N++;                                    //  update system size
@@ -90,6 +88,7 @@ int main()
 				else if (CurrentEvent->priority == LOW)
 					N1l++;
 				
+
 				uniform = uni_rv();
 				// Generate next arrival
 				if (uniform <= ph)
@@ -98,17 +97,18 @@ int main()
 					Elist.insert(clock+exp_rv(lambda),ARR, QUEUE1, LOW);
 
 				//If this is the only customer then generate its departure event
-		      		if (N==1 && (CurrentEvent->priority == HIGH))
+		      		//if (N==1 && (CurrentEvent->priority == HIGH))
+				if (N1h == 1)
 					Elist.insert(clock+exp_rv(mu1),DEP, QUEUE1, HIGH);
-				else if (N==1 && (CurrentEvent->priority == LOW))
+				else if (N1l == 1)
 					Elist.insert(clock+exp_rv(mu1),DEP, QUEUE1, LOW);
 		      		break;
 		    	
 			case DEP:                                 // If departure
-				cout<< " in QUEUE 1 DEP\n";
+				//cout<< " in QUEUE 1 DEP\n";
 		      		EN += N*(clock-prev);                   //  update system statistics
 				if (CurrentEvent->priority == HIGH){
-					cout << "HIGH\n";
+				//	cout << "HIGH\n";
 					N1h--;
 					N2h++;
 					//generate its departure event from queue 2
@@ -116,7 +116,7 @@ int main()
 
 				}
 				else if (CurrentEvent->priority == LOW){
-					cout <<"LOW\n";
+				//	cout <<"LOW\n";
 					N1l--;
 					N2l++;
 					uniform = uni_rv();
@@ -131,7 +131,7 @@ int main()
 
 		      		//If customers remain, first generate departure events for all high priority customers.
 				//If there is no high priority customers, then only generate departure event for low.
-				cout<< " in QUEUE 1::-- N1h="<<N1h<<"\t N1l="<<N1l<<"\t\t N="<<N<<endl;
+				//cout<< " in QUEUE 1::-- N1h="<<N1h<<"\t N1l="<<N1l<<"\t\t N="<<N<<endl;
 				if (N1h > 0)
 					Elist.insert(clock+exp_rv(mu1),DEP, QUEUE1, HIGH);
 				else if (N1l > 0)
@@ -142,7 +142,7 @@ int main()
 	    	}
 		
 		else if (CurrentEvent->queue == QUEUE2){
-			cout<< " in QUEUE 2\n";
+			//cout<< " in QUEUE 2\n";
 			switch (CurrentEvent->type) {
 			//in queue 2 only departurre events will be there
 		    	case DEP:
@@ -155,14 +155,14 @@ int main()
 					N2l--;
 		      		
 				Ndep++;                                 //  increment num. of departures
-				cout<<"========="<<Ndep<<endl;
-				cout<<"priority=="<<CurrentEvent->priority<<endl;
-
-					cout<< " in QUEUE 2222::-- N2h="<<N2h<<"\t N2l="<<N2l<<"\t\t N="<<N<<endl;
-		      		//If customers remain, first generate departure events for all high priority customers.
+			//	cout<<"========="<<Ndep<<endl;
+			//	cout<<"priority=="<<CurrentEvent->priority<<endl;
+			//	cout<< " in QUEUE 2222::-- N2h="<<N2h<<"\t N2l="<<N2l<<"\t\t N="<<N<<endl;
+		      		
+				//If customers remain, first generate departure events for all high priority customers.
 				//If there is no high priority customers, then only generate departure event for low.
 				if (N > 0) {
-					cout<<"####################\n";
+			//		cout<<"####################\n";
 					if (N2h > 0)
 						Elist.insert(clock+exp_rv(mu2h),DEP, QUEUE2, HIGH);
 					else if (N2l > 0){
