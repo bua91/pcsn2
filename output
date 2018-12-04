@@ -1,3 +1,71 @@
-Current number of customers in system: 3
-Expected number of customers (simulation): 4.18227
-Expected number of customers (analysis): 4
+FOR lambda = 1
+=======================================================================================================================
+Throughput (simulation)
+	 Y[1h] = 0.400432		Y[1l] = 1.19796		Y[2h] = 0.400432		Y[2l] = 2.39191
+Expected number of customers (simulation)
+	 E[N1h] = 0.0216521	E[N1l] = 0.065084	E[N2h] = 0.0420628	E[N2l] = 0.0553603
+Avg time each priority customer spends in Queue 2
+	 E[T2h] = 0.105044	 E[T2l] = 0.0231448FOR lambda = 2
+=======================================================================================================================
+Throughput (simulation)
+	 Y[1h] = 0.801528		Y[1l] = 2.39774		Y[2h] = 0.801528		Y[2l] = 4.79865
+Expected number of customers (simulation)
+	 E[N1h] = 0.0466584	E[N1l] = 0.143678	E[N2h] = 0.0891026	E[N2l] = 0.130521
+Avg time each priority customer spends in Queue 2
+	 E[T2h] = 0.111166	 E[T2l] = 0.0271995FOR lambda = 3
+=======================================================================================================================
+Throughput (simulation)
+	 Y[1h] = 1.19928		Y[1l] = 3.59509		Y[2h] = 1.19928		Y[2l] = 7.18379
+Expected number of customers (simulation)
+	 E[N1h] = 0.0749733	E[N1l] = 0.239083	E[N2h] = 0.140643	E[N2l] = 0.232218
+Avg time each priority customer spends in Queue 2
+	 E[T2h] = 0.117273	 E[T2l] = 0.0323252FOR lambda = 4
+=======================================================================================================================
+Throughput (simulation)
+	 Y[1h] = 1.59823		Y[1l] = 4.80582		Y[2h] = 1.59823		Y[2l] = 9.61751
+Expected number of customers (simulation)
+	 E[N1h] = 0.108025	E[N1l] = 0.362679	E[N2h] = 0.197128	E[N2l] = 0.375164
+Avg time each priority customer spends in Queue 2
+	 E[T2h] = 0.123341	 E[T2l] = 0.0390085FOR lambda = 5
+=======================================================================================================================
+Throughput (simulation)
+	 Y[1h] = 1.99945		Y[1l] = 5.97863		Y[2h] = 1.99945		Y[2l] = 11.9653
+Expected number of customers (simulation)
+	 E[N1h] = 0.1436	E[N1l] = 0.520486	E[N2h] = 0.26281	E[N2l] = 0.577193
+Avg time each priority customer spends in Queue 2
+	 E[T2h] = 0.131441	 E[T2l] = 0.0482388FOR lambda = 6
+=======================================================================================================================
+Throughput (simulation)
+	 Y[1h] = 2.4046		Y[1l] = 7.20719		Y[2h] = 2.4046		Y[2l] = 14.4058
+Expected number of customers (simulation)
+	 E[N1h] = 0.185744	E[N1l] = 0.742836	E[N2h] = 0.337665	E[N2l] = 0.885291
+Avg time each priority customer spends in Queue 2
+	 E[T2h] = 0.140425	 E[T2l] = 0.0614537FOR lambda = 7
+=======================================================================================================================
+Throughput (simulation)
+	 Y[1h] = 2.80327		Y[1l] = 8.39905		Y[2h] = 2.80327		Y[2l] = 16.8082
+Expected number of customers (simulation)
+	 E[N1h] = 0.232124	E[N1l] = 1.05109	E[N2h] = 0.418473	E[N2l] = 1.35778
+Avg time each priority customer spends in Queue 2
+	 E[T2h] = 0.14928	 E[T2l] = 0.0807813FOR lambda = 8
+=======================================================================================================================
+Throughput (simulation)
+	 Y[1h] = 3.18852		Y[1l] = 9.61576		Y[2h] = 3.18852		Y[2l] = 19.2498
+Expected number of customers (simulation)
+	 E[N1h] = 0.281154	E[N1l] = 1.51933	E[N2h] = 0.510086	E[N2l] = 2.16509
+Avg time each priority customer spends in Queue 2
+	 E[T2h] = 0.159976	 E[T2l] = 0.112473FOR lambda = 9
+=======================================================================================================================
+Throughput (simulation)
+	 Y[1h] = 3.60013		Y[1l] = 10.8088		Y[2h] = 3.60013		Y[2l] = 21.6407
+Expected number of customers (simulation)
+	 E[N1h] = 0.338217	E[N1l] = 2.30667	E[N2h] = 0.619191	E[N2l] = 3.73292
+Avg time each priority customer spends in Queue 2
+	 E[T2h] = 0.171991	 E[T2l] = 0.172495FOR lambda = 10
+=======================================================================================================================
+Throughput (simulation)
+	 Y[1h] = 3.9892		Y[1l] = 11.9785		Y[2h] = 3.9892		Y[2l] = 23.9782
+Expected number of customers (simulation)
+	 E[N1h] = 0.399064	E[N1l] = 3.65454	E[N2h] = 0.740541	E[N2l] = 7.62831
+Avg time each priority customer spends in Queue 2
+	 E[T2h] = 0.185637	 E[T2l] = 0.318135
