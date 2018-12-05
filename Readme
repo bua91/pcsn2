@@ -1,10 +1,10 @@
-Simulation of M/M/1 queueing system
+Programming assignment 2
 -----------------------------------
 
-Description:  This program simulates an M/M/1 queueing system.  
-The simulation outputs the number of customers in the queue after 
-100000 departures from the system, and the average number of 
-customers in the system over the entire simulation.
+Owner: Arunabha Chakraborty
+NetId: axc175630
+
+Description:  As described in main.cpp file
 
 Platform/compiler: UNIX, g++
 
@@ -21,5 +21,7 @@ rv.h - Header file for rv.cpp
 Compiling instructions:
 Edit Makefile to point to the c++ compiler on the local machine.
 To compile, place all files within a single directory and type "make".
-To run, type "sim".
+To clean the output files before recompiling type "make clean" and then recompile using "make"
+To run, type "./sim".
+To redirect the output of the simulation, type "./sim > output"
 

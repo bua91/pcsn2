@@ -7,6 +7,8 @@ using namespace std;
 // Insert an Event into an EventList sorted by time index
 // time - The time at which the event takes place
 // type - The type of event
+// queue - the queue number
+// priority - high/low priority customers
 void EventList::insert(double time, int type, int queue, int priority)
 {
   event_count++;                        // Increment number of events in list.

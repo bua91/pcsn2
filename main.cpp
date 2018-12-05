@@ -4,6 +4,28 @@
 #include "rv.h"
 #include "event.h"
 #include <iomanip>
+
+/* QUEUEING SYSTEM DESCRIPTION:
+ * 	In this problem, I have implement a simulation for a queueing network with two classes of customers. There are
+ * two queues in the network. The queue capacities are assumed to be infinite, and each queue has a single server.
+ * High-priority customers in each queue are always served before low-priority customers in each queue; however, if a
+ * low-priority customer is already in service, it will not be pre-empted by a high-priority customer. Customers arrive
+ * to the overall system according to a Poisson process with rate λ customers per second. With probability pH, the
+ * customer will be a high-priority customer, and with probability pL = 1 − pH, the customer will be a low-priority
+ * customer. The customers will always arrive to Queue 1. The service time for a customer at Queue 1 is exponentially
+ * distributed with an average service time of 1/µ1 seconds, independent of the priority of the customer.
+ * 	When a customer departs from Queue 1, it enters Queue 2. The service time for a high-priority customer at Queue
+ * 2 is exponentially distributed with an average service time of 1/µ2H seconds, and the service time for a low-priority
+ * packet at Queue 2 is exponentially distributed with an average service time of 1/µ2L seconds. When a high-priority
+ * customer departs from Queue 2, it leaves the system. When a low-priority customer departs from Queue 2, it departs
+ * from the network with probability r2d, it returns to Queue 1 with probability r21, and it returns to Queue 2 with
+ * probability r22.
+ * Implemented a discrete event simulation for the above system. For each of the experiments below, the simulation is runned
+ * until at least 500,000 customers have departed from the system. Let pH = 25 , pL = 35 , r2d = 14, r21 = 14, r22 = 12 ,
+ * µ1 = 20 customers per second, µ2H = 10 customers per second, and µ2L = 50 customers per second. Do not
+ * hard-code these values, but allow them to be entered as user inputs to the program.
+ */
+
 int main()
 {
   using namespace std;
@@ -29,7 +51,7 @@ int main()
   }
   for (lambda = 1; lambda <= 10; lambda++){
 	  
-  	  cout<<"\nFOR lambda = "<<lambda<<"\n=======================================================================================================================\n";
+  	  cout<<"\nFOR lambda = "<<lambda<<"\n======================================================================================================================\n";
 	  EventList Elist;                // Create event list
 	  enum {ARR,DEP, TRANS};                 // Define the event types
 
@@ -55,16 +77,18 @@ int main()
 	  double EN2h = 0.0;
 	  double EN2l = 0.0;
 
-	  double prev1h = 0.0;
-	  double prev1l = 0.0;
-	  double prev2l = 0.0;
-	  double prev2h = 0.0;
+	  //set previous time to clock value
+	  double prev1h = clock;
+	  double prev1l = clock;
+	  double prev2l = clock;
+	  double prev2h = clock;
 
 	  int done = 0;                   // End condition satisfied?
 	  double uniform = 0.0;
 
 	  Event* CurrentEvent;
 
+	  //Generate arrival events
           Elist.insert(exp_rv(lambda*ph),ARR, QUEUE1, HIGH); // Generate first arrival event to queue 1 for high priority customer
 	  Elist.insert(exp_rv(lambda*pl),ARR, QUEUE1, LOW); // Generate first arrival event to queue 1 for low priority customer
 	  
@@ -72,7 +96,7 @@ int main()
 	  {
 	  	CurrentEvent = Elist.get();               // Get next Event from list
 	    	if (CurrentEvent == NULL){
-	    		//IF the eventlist is empty, generate new arrival events.
+	    		//IF the eventlist is empty, generate new arrival events for high and low priority customers.
 			Elist.insert(clock+exp_rv(lambda*ph),ARR, QUEUE1, HIGH);
 			Elist.insert(clock+exp_rv(lambda*pl),ARR, QUEUE1, LOW);
 			
@@ -81,19 +105,20 @@ int main()
 			CurrentEvent = Elist.get();
 		}
 
-	    	//double prev = clock;                      // Store old clock value
 	    	clock=CurrentEvent->time;                 // Update system clock 
 
 	    	if (CurrentEvent->queue == QUEUE1){
 			switch (CurrentEvent->type) {
-		    	case ARR:				// If arrival
+		    	case ARR:				             // If arrival
 		      		if (CurrentEvent->priority == HIGH){
 					EN1h += N1h*(clock-prev1h);
+					//update prev
 					prev1h = clock;
 		      			N1h++;
 				}
 				else if (CurrentEvent->priority == LOW){
 					EN1l += N1l*(clock-prev1l);
+					//update prev
 					prev1l = clock;
 					N1l++;
 				}				
@@ -114,11 +139,13 @@ int main()
 
 		      		break;
 		    	
-			case DEP:                                 // If departure
+			case DEP:                                                // If departure
 				if (CurrentEvent->priority == HIGH){
 					EN1h += N1h*(clock-prev1h);
+					//update prev
 					prev1h = clock;
 					EN2h += N2h*(clock-prev2h);
+					//update prev
 					prev2h = clock;
 
 					N1h--;
@@ -132,8 +159,10 @@ int main()
 				}
 				else if (CurrentEvent->priority == LOW){
 					EN1l += N1l*(clock-prev1l);
+					//update prev
 					prev1l = clock;
 					EN2l += N2l*(clock-prev2l);
+					//update prev
 					prev2l = clock;
 
 					N1l--;
@@ -152,9 +181,10 @@ int main()
 					Elist.insert(clock+exp_rv(mu1),DEP, QUEUE1, LOW);
 
 		      		break;
-			case TRANS:
+			case TRANS:                                              //If transition from one queue to another
 				EN1l += N1l*(clock-prev1l);
 				N1l++;
+				//update prev
 				prev1l = clock;
 				if ((N1l+N1h) == 1){
 					Elist.insert(clock+exp_rv(mu1),DEP, QUEUE1, LOW);
@@ -167,6 +197,7 @@ int main()
 		    	case DEP:
 				if (CurrentEvent->priority == HIGH){
 					EN2h += N2h*(clock-prev2h);
+					//update prev
 					prev2h = clock;
 					N2h--;
 					if (N2h > 0)
@@ -178,6 +209,7 @@ int main()
 				}
 				else if (CurrentEvent->priority == LOW){
 					EN2l += N2l*(clock-prev2l);
+					//update prev
 					prev2l = clock;
 					N2l--;
 					Ndep2l++;
@@ -198,6 +230,7 @@ int main()
 			case TRANS:
 				EN2l += N2l*(clock-prev2l);
 				N2l++;
+				//update prev
 				prev2l = clock;
 				if ((N2l+N2h) == 1)
 					Elist.insert(clock+exp_rv(mu2l),DEP, QUEUE2, LOW);
@@ -222,6 +255,6 @@ int main()
 
 	  // simulation values for the average time each priority customer spends in Queue 2
 	  cout <<"Avg time each priority customer spends in Queue 2\n"<<"\t E[T2h] = "<< EN2h/Ndep2h
-	       <<"\t E[T2l] = "<< EN2l/Ndep2l;
+	       <<"\t E[T2l] = "<< EN2l/Ndep2l<<endl;
     }
 }
