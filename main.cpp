@@ -3,7 +3,7 @@
 #include <iostream>
 #include "rv.h"
 #include "event.h"
-
+#include <iomanip>
 int main()
 {
   using namespace std;
@@ -17,16 +17,19 @@ int main()
   mu1 = 20;
   mu2h = 10;
   mu2l = 50;
-  /*char def;
+  
+  char def;
   cout<<"Do you want to use default values[y/n]:"<<"\t";
   cin >> def;
   if (tolower(def) != 'y'){
-  	cout<<"Please enter the values of: ph, pl, r2d, r21, r22, mu1, mu2h, mu2l in the order\n";
-	cin>> ph >> pl >> r2d >> r21 >> r22 >> mu1 >> mu2h >> mu2l;
-  }*/
-
+  	cout<<"Please enter the values of: ph, r2d, r21, mu1, mu2h, mu2l in the order\n";
+	cin>> ph >> r2d >> r21 >> mu1 >> mu2h >> mu2l;
+	pl = 1 - ph;
+	r22 = 1 - (r2d+r21);
+  }
   for (lambda = 1; lambda <= 10; lambda++){
 	  
+  	  cout<<"\nFOR lambda = "<<lambda<<"\n=======================================================================================================================\n";
 	  EventList Elist;                // Create event list
 	  enum {ARR,DEP, TRANS};                 // Define the event types
 
@@ -205,14 +208,20 @@ int main()
 	    delete CurrentEvent;
 	    if (Ndep > 500000) done=1;        // End condition
 	  }
-	  cout <<"lambda:"<<lambda<<endl;
-	  // output simulation results for N, E[N] 
-	  //cout << "Current number of customers in system: " << N << endl;
-	  cout << "Expected number of customers (simulation QUEUE1:HIGH = " << EN1h/clock <<"\tQUEUE1:LOW = "
-	       <<EN1l/clock << "\tQUEUE2:HIGH = "<<EN2h/clock<<"\tQUEUE2:LOW = "<<EN2l/clock<<endl;
+	  
+	  // RESULTS
+	  // simulation and theoretical values for the high-priority throughput and the low-priority throughput of each
+	  cout <<"Throughput (analysis)"<<"\n\t"<<"Thrput[1h] = " <<lambda*ph <<"\tThrput[1l] = "
+	                           <<(lambda*pl)/(1.0-r22)<<"\tThrput[2h] = "<<lambda*ph<<"\tThrput[2l] = "<<(lambda*pl)/((1.0-r21-r22))<<endl;
+	  cout <<"Throughput (simulation)"<<"\n\t"<<"Thrput[1h] = " << Ndep1h/clock <<"\tThrput[1l] = "
+	                 <<Ndep1l/clock <<"\tThrput[2h] = "<<Ndep2h/clock<<"\tThrput[2l] = "<<Ndep2l/clock<<endl;
 
-	  // output derived value for E[N]
-  	//double rho = lambda/mu; 
-  	//cout << "Expected number of customers (analysis): " << rho/(1-rho) << endl;
+	  // simulation values for the expected number of each priority of customers in each queue
+	  cout <<"Expected number of customers (simulation)"<<"\n"<<"\t E[N1h] = " << EN1h/clock <<"\tE[N1l] = "
+	       <<EN1l/clock <<"\tE[N2h] = "<<EN2h/clock<<"\tE[N2l] = "<<EN2l/clock<<endl;
+
+	  // simulation values for the average time each priority customer spends in Queue 2
+	  cout <<"Avg time each priority customer spends in Queue 2\n"<<"\t E[T2h] = "<< EN2h/Ndep2h
+	       <<"\t E[T2l] = "<< EN2l/Ndep2l;
     }
 }
