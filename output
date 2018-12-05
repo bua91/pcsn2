@@ -1,6 +1,6 @@
 
 FOR lambda = 1
-=======================================================================================================================
+======================================================================================================================
 Throughput (analysis)
 	Thrput[1h] = 0.4	Thrput[1l] = 1.2	Thrput[2h] = 0.4	Thrput[2l] = 2.4
 Throughput (simulation)
@@ -9,8 +9,9 @@ Expected number of customers (simulation)
 	 E[N1h] = 0.0216521	E[N1l] = 0.065084	E[N2h] = 0.0420628	E[N2l] = 0.0553603
 Avg time each priority customer spends in Queue 2
 	 E[T2h] = 0.105044	 E[T2l] = 0.0231448
+
 FOR lambda = 2
-=======================================================================================================================
+======================================================================================================================
 Throughput (analysis)
 	Thrput[1h] = 0.8	Thrput[1l] = 2.4	Thrput[2h] = 0.8	Thrput[2l] = 4.8
 Throughput (simulation)
@@ -19,8 +20,9 @@ Expected number of customers (simulation)
 	 E[N1h] = 0.0466584	E[N1l] = 0.143678	E[N2h] = 0.0891026	E[N2l] = 0.130521
 Avg time each priority customer spends in Queue 2
 	 E[T2h] = 0.111166	 E[T2l] = 0.0271995
+
 FOR lambda = 3
-=======================================================================================================================
+======================================================================================================================
 Throughput (analysis)
 	Thrput[1h] = 1.2	Thrput[1l] = 3.6	Thrput[2h] = 1.2	Thrput[2l] = 7.2
 Throughput (simulation)
@@ -29,8 +31,9 @@ Expected number of customers (simulation)
 	 E[N1h] = 0.0749733	E[N1l] = 0.239083	E[N2h] = 0.140643	E[N2l] = 0.232218
 Avg time each priority customer spends in Queue 2
 	 E[T2h] = 0.117273	 E[T2l] = 0.0323252
+
 FOR lambda = 4
-=======================================================================================================================
+======================================================================================================================
 Throughput (analysis)
 	Thrput[1h] = 1.6	Thrput[1l] = 4.8	Thrput[2h] = 1.6	Thrput[2l] = 9.6
 Throughput (simulation)
@@ -39,8 +42,9 @@ Expected number of customers (simulation)
 	 E[N1h] = 0.108025	E[N1l] = 0.362679	E[N2h] = 0.197128	E[N2l] = 0.375164
 Avg time each priority customer spends in Queue 2
 	 E[T2h] = 0.123341	 E[T2l] = 0.0390085
+
 FOR lambda = 5
-=======================================================================================================================
+======================================================================================================================
 Throughput (analysis)
 	Thrput[1h] = 2	Thrput[1l] = 6	Thrput[2h] = 2	Thrput[2l] = 12
 Throughput (simulation)
@@ -49,8 +53,9 @@ Expected number of customers (simulation)
 	 E[N1h] = 0.1436	E[N1l] = 0.520486	E[N2h] = 0.26281	E[N2l] = 0.577193
 Avg time each priority customer spends in Queue 2
 	 E[T2h] = 0.131441	 E[T2l] = 0.0482388
+
 FOR lambda = 6
-=======================================================================================================================
+======================================================================================================================
 Throughput (analysis)
 	Thrput[1h] = 2.4	Thrput[1l] = 7.2	Thrput[2h] = 2.4	Thrput[2l] = 14.4
 Throughput (simulation)
@@ -59,8 +64,9 @@ Expected number of customers (simulation)
 	 E[N1h] = 0.185744	E[N1l] = 0.742836	E[N2h] = 0.337665	E[N2l] = 0.885291
 Avg time each priority customer spends in Queue 2
 	 E[T2h] = 0.140425	 E[T2l] = 0.0614537
+
 FOR lambda = 7
-=======================================================================================================================
+======================================================================================================================
 Throughput (analysis)
 	Thrput[1h] = 2.8	Thrput[1l] = 8.4	Thrput[2h] = 2.8	Thrput[2l] = 16.8
 Throughput (simulation)
@@ -69,8 +75,9 @@ Expected number of customers (simulation)
 	 E[N1h] = 0.232124	E[N1l] = 1.05109	E[N2h] = 0.418473	E[N2l] = 1.35778
 Avg time each priority customer spends in Queue 2
 	 E[T2h] = 0.14928	 E[T2l] = 0.0807813
+
 FOR lambda = 8
-=======================================================================================================================
+======================================================================================================================
 Throughput (analysis)
 	Thrput[1h] = 3.2	Thrput[1l] = 9.6	Thrput[2h] = 3.2	Thrput[2l] = 19.2
 Throughput (simulation)
@@ -79,8 +86,9 @@ Expected number of customers (simulation)
 	 E[N1h] = 0.281154	E[N1l] = 1.51933	E[N2h] = 0.510086	E[N2l] = 2.16509
 Avg time each priority customer spends in Queue 2
 	 E[T2h] = 0.159976	 E[T2l] = 0.112473
+
 FOR lambda = 9
-=======================================================================================================================
+======================================================================================================================
 Throughput (analysis)
 	Thrput[1h] = 3.6	Thrput[1l] = 10.8	Thrput[2h] = 3.6	Thrput[2l] = 21.6
 Throughput (simulation)
@@ -89,8 +97,9 @@ Expected number of customers (simulation)
 	 E[N1h] = 0.338217	E[N1l] = 2.30667	E[N2h] = 0.619191	E[N2l] = 3.73292
 Avg time each priority customer spends in Queue 2
 	 E[T2h] = 0.171991	 E[T2l] = 0.172495
+
 FOR lambda = 10
-=======================================================================================================================
+======================================================================================================================
 Throughput (analysis)
 	Thrput[1h] = 4	Thrput[1l] = 12	Thrput[2h] = 4	Thrput[2l] = 24
 Throughput (simulation)
